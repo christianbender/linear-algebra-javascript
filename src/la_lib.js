@@ -149,6 +149,23 @@ var LinearAlgebra;
             }
             return this;
         };
+        // returns true if the vectors are equal otherwise false.
+        Vector.prototype.equal = function (other) {
+            var ans = true;
+            var SIZE = this.size();
+            var EPSILON = 0.001;
+            if (SIZE == other.size()) {
+                for (var i = 0; i < SIZE; i++) {
+                    if (Math.abs(this.components[i] - other.component(i)) > EPSILON) {
+                        ans = false;
+                    }
+                }
+            }
+            else {
+                ans = false;
+            }
+            return ans;
+        };
         return Vector;
     }()); // end of class Vector
     LinearAlgebra.Vector = Vector;
@@ -185,4 +202,124 @@ var LinearAlgebra;
         return ans;
     }
     LinearAlgebra.randomVectorFloat = randomVectorFloat;
+    // ------------------ end of global functions -----------------------------
+    /*
+        class: Matrix
+        This class represents a matrix of arbitrary size and operations on it.
+    */
+    var Matrix = /** @class */ (function () {
+        // constructor for zero-matrix or fix number matrix.
+        function Matrix(row, col, comps) {
+            if (comps === void 0) { comps = []; }
+            if (comps.length == 0) {
+                this.matrix = new Array();
+                var rowVector = new Array();
+                for (var i = 0; i < row; i++) {
+                    for (var j = 0; j < col; j++) {
+                        rowVector[j] = 0;
+                    }
+                    this.matrix[i] = rowVector;
+                    rowVector = new Array();
+                }
+            }
+            else {
+                this.matrix = comps;
+            }
+            this.rows = row;
+            this.cols = col;
+        }
+        // returns the specified component.
+        Matrix.prototype.component = function (x, y) {
+            if (x >= 0 && x < this.rows && y >= 0 && y < this.cols) {
+                return this.matrix[x][y];
+            }
+            else {
+                throw new Error("component: index out of bounds");
+            }
+        };
+        // changes the specified component with value 'value'.
+        Matrix.prototype.changeComponent = function (x, y, value) {
+            if (x >= 0 && x < this.rows && y >= 0 && y < this.cols) {
+                this.matrix[x][y] = value;
+            }
+            else {
+                throw new Error("changeComponent: index out of bounds");
+            }
+        };
+        // returns a string representation of this matrix.
+        Matrix.prototype.toString = function () {
+            var ans = "";
+            for (var i = 0; i < this.rows; i++) {
+                ans += "|";
+                for (var j = 0; j < this.cols; j++) {
+                    if (j < this.cols - 1) {
+                        ans += this.matrix[i][j] + ",";
+                    }
+                    else {
+                        if (i < this.rows - 1) {
+                            ans += this.matrix[i][j] + "|\n";
+                        }
+                        else {
+                            ans += this.matrix[i][j] + "|";
+                        }
+                    }
+                }
+            }
+            return ans;
+        };
+        // returns the dimension rows x cols as number array
+        Matrix.prototype.dimension = function () {
+            var ans = new Array();
+            ans[0] = this.rows;
+            ans[1] = this.cols;
+            return ans;
+        };
+        // matrix addition. returns the result.
+        Matrix.prototype.add = function (other) {
+            if (this.rows == other.dimension()[0]
+                && this.cols == other.dimension()[1]) {
+                var ans = new Matrix(this.rows, this.cols);
+                for (var i = 0; i < this.rows; i++) {
+                    for (var j = 0; j < this.cols; j++) {
+                        ans.changeComponent(i, j, (this.matrix[i][j] + other.component(i, j)));
+                    }
+                }
+                return ans;
+            }
+            else {
+                throw new Error("add: matrices must have same dimension!");
+            }
+        };
+        // returns true if the matrices are equal, otherwise false. 
+        Matrix.prototype.equal = function (other) {
+            var ans = true;
+            var EPSILON = 0.001;
+            if (this.rows == other.dimension()[0]
+                && this.cols == other.dimension()[1]) {
+                for (var i = 0; i < this.rows; i++) {
+                    for (var j = 0; j < this.cols; j++) {
+                        if (Math.abs(this.matrix[i][j] - other.component(i, j)) > EPSILON) {
+                            ans = false;
+                        }
+                    }
+                }
+            }
+            else {
+                ans = false;
+            }
+            return ans;
+        };
+        // matrix-scalar multiplication
+        Matrix.prototype.scalar = function (c) {
+            var ans = new Matrix(this.rows, this.cols);
+            for (var i = 0; i < this.rows; i++) {
+                for (var j = 0; j < this.cols; j++) {
+                    ans.changeComponent(i, j, (this.matrix[i][j] * c));
+                }
+            }
+            return ans;
+        };
+        return Matrix;
+    }()); // end of class Matrix
+    LinearAlgebra.Matrix = Matrix;
 })(LinearAlgebra || (LinearAlgebra = {})); // end of namespace LinearAlgebra

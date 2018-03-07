@@ -1,7 +1,7 @@
 {
   "name": "linear-algebra-javascript",
   "version": "1.0.0",
-  "description": "simple linear algebra library",
+  "description": "simple linear algebra library for JavaScript",
   "main": "index.js",
   "directories": {
     "test": "test"
@@ -9,8 +9,8 @@
   "scripts": {
     "test": "mocha"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Christian Bender",
+  "license": "MIT",
   "dependencies": {
     "mocha": "^5.0.2"
   }

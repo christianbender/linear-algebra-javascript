@@ -21,10 +21,22 @@ The library was orginal written in **TypeScript** and then compiles into pure Ja
     - dot(other) : computes the dot-product and returns it.  
     - scalar(s)  : scalar (s) multiplication. returns the result.  
     - norm() : normalizes this vector and returns it.  
+    - equal(other) : returns true if the vectors are equal, otherwise false.  
+
 - function unitBasisVector(N,pos) : returns a unit basis vector of size N with a One on position 'pos'  
 - function randomVectorInt(N,a,b) : returns a random vector with integer components (between 'a' and 'b') of size N.  
 - function randomVectorFloat(N,a,b) : returns a random vector with floating point components (between 'a' and 'b') of size N.    
 
+- class Matrix : This class represents a matrix of arbitrary size and operations on it.  
+    - constructor(rows, cols) : creates a zero matrix of dimension rows x cols.  
+    - constructor(rows, cols, components) : creates a matrix with fix numbers of dimension rows x cols.  
+    - component(x,y) : returns the specified component.  
+    - changeComponent(x,y,value) : changes the specified component with the new value 'value'.  
+    - toString() : returns a string representation of this matrix.  
+    - dimension() : returns the dimension of this matrix as number arras [rows,cols].  
+    - add(other) : returns the result of the matrix addition.  
+    - equal(other) : returns true if the matrices are equal, otherwise false.  
+    - scalar(c) : returns the result of the matrix-scalar multiplication.  
 ---
 
 ## Documentation  
@@ -98,6 +110,5 @@ The test-suite use the JavaScript test-framework **mocha**.
 ## Contributing  
 
 You can contribute to this project. Feel free and pull request some new features or documention.   
-**TODO:** A class Matrix and operations on it.  
 **TODO:** Global functions for special matrices.  
 **TODO:** Documention of the classes and functions.  
